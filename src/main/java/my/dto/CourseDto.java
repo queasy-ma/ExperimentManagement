@@ -1,9 +1,17 @@
 package my.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CourseDto {
     private Long id;
     private String name;
     private String description;
+
+    private List<ExperimentDto> experiments = new ArrayList<>();
+    public void addExperiment(ExperimentDto experiment) {
+        this.experiments.add(experiment);
+    }
 
     // Default constructor, getters and setters
     public CourseDto() {
@@ -14,6 +22,8 @@ public class CourseDto {
         this.name = name;
         this.description = description;
     }
+
+
 
     // getters and setters
     public Long getId() {
@@ -35,8 +45,13 @@ public class CourseDto {
     public String getDescription() {
         return description;
     }
+    public List<ExperimentDto> getExperiments() { return experiments; }
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void setExperiments(List<ExperimentDto> orDefault) {
+        this.experiments = orDefault;
     }
 }

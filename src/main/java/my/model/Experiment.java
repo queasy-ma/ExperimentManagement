@@ -1,11 +1,9 @@
 package my.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.JoinColumn;
+import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Experiment {
@@ -20,6 +18,9 @@ public class Experiment {
     @ManyToOne
     @JoinColumn(name = "course_id")
     private Course course;
+
+    @OneToMany(mappedBy = "experiment", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ExperimentContent> experimentContents = new ArrayList<>();
 
     // 构造函数
     public Experiment() {}
@@ -55,5 +56,9 @@ public class Experiment {
 
     public void setCourse(Course course) {
         this.course = course;
+    }
+
+    public Long getCourseId() {
+        return course.getId();
     }
 }

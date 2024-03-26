@@ -38,5 +38,9 @@ public class Course {
         return this.id;
     }
 
+    public List<Experiment> getExperiments() {
+        return experiments;
+    }
+
     // getters and setters
 }
