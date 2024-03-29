@@ -23,5 +23,7 @@ public class ExperimentContentDto {
         this.id = id;
     }
 
+    public long getId(){return id;}
+
     // 构造函数、getter和setter
 }
