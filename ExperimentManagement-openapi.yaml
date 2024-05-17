@@ -1,0 +1,213 @@
+openapi: "3.0.3"
+info:
+  title: "ExperimentManagement API"
+  description: "ExperimentManagement API"
+  version: "1.0.0"
+servers:
+  - url: "https://ExperimentManagement"
+paths:
+  /courses/add:
+    post:
+      summary: "POST courses/add"
+      operationId: "createCourse"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CourseDto"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/CourseDto"
+  /courses/delete/{id}:
+    delete:
+      summary: "DELETE courses/delete/{id}"
+      operationId: "deleteCourse"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Void"
+  /experiments/add:
+    post:
+      summary: "POST experiments/add"
+      operationId: "createExperiment"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ExperimentDto"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ExperimentDto"
+  /experiments/delete/{id}:
+    delete:
+      summary: "DELETE experiments/delete/{id}"
+      operationId: "deleteExperiment"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Void"
+  /experiment-contents/add:
+    post:
+      summary: "POST experiment-contents/add"
+      operationId: "createExperimentContent"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ExperimentContentDto"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ExperimentContentDto"
+  /experiment-contents/delete/{id}:
+    delete:
+      summary: "DELETE experiment-contents/delete/{id}"
+      operationId: "deleteExperimentContent"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Void"
+  /export/{type}:
+    get:
+      summary: "GET export/{type}"
+      operationId: "exportData"
+      parameters:
+        - name: "type"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+        - name: "courseIds"
+          in: "query"
+          required: false
+          schema:
+            type: "array"
+            items:
+              type: "integer"
+              format: "int64"
+            default: []
+        - name: "experimentIds"
+          in: "query"
+          required: false
+          schema:
+            type: "array"
+            items:
+              type: "integer"
+              format: "int64"
+            default: []
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "array"
+                items:
+                  type: "string"
+                  format: "byte"
+  /data/all:
+    get:
+      summary: "GET data/all"
+      operationId: "getAllData"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/AllDataDto"
+components:
+  schemas:
+    ExperimentContentDto:
+      type: "object"
+      properties:
+        details:
+          type: "string"
+        experimentId:
+          type: "integer"
+          format: "int64"
+    ExperimentDto:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          format: "int64"
+        title:
+          type: "string"
+        type:
+          type: "string"
+        courseId:
+          type: "integer"
+          format: "int64"
+        experimentContents:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/ExperimentContentDto"
+    CourseDto:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          format: "int64"
+        name:
+          type: "string"
+        description:
+          type: "string"
+        experiments:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/ExperimentDto"
+    Void:
+      type: "object"
+      properties: { }
+    AllDataDto:
+      type: "object"
+      properties:
+        courses:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/CourseDto"
